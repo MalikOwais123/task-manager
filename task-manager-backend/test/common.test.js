@@ -3,9 +3,9 @@ import { expect } from "chai";
 import mongoose from "mongoose";
 import { MongoMemoryServer } from "mongodb-memory-server";
 
-import app from "../server.js";
 import User from "../models/User.js";
 import Task from "../models/Task.js";
+import createApp from "../app.js";
 
 const testingUser = {
   email: "random_testing@yopmail.com",
@@ -15,6 +15,10 @@ const testingUser = {
 describe("Authentication API", function () {
   let mongoServer;
   let authToken;
+
+  // Create app without connecting to DB, as we don't need it for testing
+  const connectToDB = false;
+  const app = createApp(connectToDB);
 
   // Increase timeout for the entire suite
   this.timeout(10000); // 10 seconds timeout
